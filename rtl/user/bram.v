@@ -15,17 +15,20 @@ module bram(
     input   wire    [31:0]   A0;
 
     // 16 kB
-    parameter N = 1024;
-    (* ram_style = "block" *) reg [31:0] RAM[0:(N*N)-1];
+    // parameter N = 1024;
+    (* ram_style = "block" *) reg [7:0] RAM[0:(4*1024*1024)-1];
 
 
     always @(posedge CLK)
         if(EN0) begin
-            Do0 <= RAM[A0[N-1:0]];
-            if(WE0[0]) RAM[A0[N-1:0]][7:0] <= Di0[7:0];
-            if(WE0[1]) RAM[A0[N-1:0]][15:8] <= Di0[15:8];
-            if(WE0[2]) RAM[A0[N-1:0]][23:16] <= Di0[23:16];
-            if(WE0[3]) RAM[A0[N-1:0]][31:24] <= Di0[31:24];
+            Do0 <= {RAM[{A0[21:2],2'b11}],
+                    RAM[{A0[21:2],2'b10}],
+                    RAM[{A0[21:2],2'b01}],
+                    RAM[{A0[21:2],2'b00}]};
+            if(WE0[0]) RAM[{A0[21:2],2'b00}] <= Di0[7:0];
+            if(WE0[1]) RAM[{A0[21:2],2'b01}] <= Di0[15:8];
+            if(WE0[2]) RAM[{A0[21:2],2'b10}] <= Di0[23:16];
+            if(WE0[3]) RAM[{A0[21:2],2'b11}] <= Di0[31:24];
         end
         else
             Do0 <= 32'b0;

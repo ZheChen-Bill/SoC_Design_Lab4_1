@@ -9,9 +9,9 @@ void __attribute__ ( ( section ( ".mprjram" ) ) ) initfir() {
 }
 int __attribute__ ( ( section ( ".mprjram" ) ) ) output(int input) {
 	// count fir output
-	for(int i=0; i<(N-1); i=i+1){
+	for(int i=(N-1); i>0; i=i-1){
 		// x[0] => x[1] x[0] => x[2] x[1] x[0] => x[3] x[2] x[1] x[0] ... etc
-		inputbuffer[i+1] = inputbuffer[i];
+		inputbuffer[i] = inputbuffer[i-1];
 	}
 	inputbuffer[0] = input;
 
