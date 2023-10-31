@@ -1,0 +1,10 @@
+*.pptx
+*.log
+*.jou
+*.pb
+*.vcd
+*.wdb
+*.gtkw
+*.i
+*.o
+*.s
