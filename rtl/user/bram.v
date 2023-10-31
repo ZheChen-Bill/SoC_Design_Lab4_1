@@ -15,8 +15,8 @@ module bram(
     input   wire    [31:0]   A0;
 
     // 16 kB
-    // parameter N = 1024;
-    (* ram_style = "block" *) reg [7:0] RAM[0:(4*1024*1024)-1];
+    // parameter N = 16;
+    (* ram_style = "block" *) reg [7:0] RAM[0:(4*1024)-1];
 
 
     always @(posedge CLK)
