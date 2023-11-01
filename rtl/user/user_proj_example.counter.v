@@ -13,7 +13,7 @@
 // limitations under the License.
 // SPDX-License-Identifier: Apache-2.0
 
-`default_nettype none
+`default_nettype wire
 /*
  *-------------------------------------------------------------
  *
@@ -34,10 +34,11 @@
  *
  *-------------------------------------------------------------
  */
+`define MPRJ_IO_PADS 32
 
 module user_proj_example #(
     parameter BITS = 32,
-    parameter DELAYS=10
+    parameter DELAYS = 10
 )(
 `ifdef USE_POWER_PINS
     inout vccd1,	// User area 1 1.8V supply
@@ -130,7 +131,15 @@ module user_proj_example #(
             end
         end
     end
-
+    
+    bram user_bram (
+        .CLK(clk),
+        .WE0(wstrb),
+        .EN0(valid),
+        .Di0(wbs_dat_i),
+        .Do0(rdata),
+        .A0(wbs_adr_i)
+    );
 
 /*    counter #(
         .BITS(BITS)
@@ -147,18 +156,10 @@ module user_proj_example #(
         .count(count)
     );
 */
-    bram user_bram (
-        .CLK(clk),
-        .WE0(wstrb),
-        .EN0(valid),
-        .Di0(wbs_dat_i),
-        .Do0(rdata),
-        .A0(wbs_adr_i)
-    );
 
 endmodule
 
-module counter #(
+/*module counter #(
     parameter BITS = 32
 )(
     input clk,
@@ -199,6 +200,6 @@ module counter #(
     end
 
 endmodule
-
+*/
 
 `default_nettype wire
